@@ -30,6 +30,6 @@ jobs:
       - name: OUIIIII
         run: |
           python3 helloworld.py
-      - name: Build and Tag image
-        run: |
-          docker build -f Dockerfile .
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag python_hello_world:$(date +%s)
+ 
