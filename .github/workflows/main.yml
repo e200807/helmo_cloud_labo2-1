@@ -32,4 +32,4 @@ jobs:
           python3 helloworld.py
       - name: Build and Tag image
         run: |
-          docker build -f ./Dockerfile .
+          docker build -f Dockerfile .
