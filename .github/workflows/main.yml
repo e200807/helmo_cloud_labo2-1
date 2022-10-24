@@ -28,12 +28,14 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics     
       - name: Build the Docker image
-        run: docker build --file Dockerfile --tag python_hello_world:${{ date +%s }} .
+        run: docker build -f ./Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/hello-world-python:${{ github.run_number }} .
         
       - name: Scan image
         uses: Azure/container-scan@v0
         with:
-          image-name: python_hello_world:${{ date +%s }}
+          image-name: ${{ secrets.ACR_LOGIN_SERVER }}/hello-world-python:${{ github.run_number }}
           severity-threshold: CRITICAL
           run-quality-checks: true
- 
+          
+      - name: Push image
+        run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/hello-world-python:${{ github.run_number }}
