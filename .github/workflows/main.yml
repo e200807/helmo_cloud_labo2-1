@@ -34,24 +34,23 @@ jobs:
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics     
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics   
+          
       - name: OUIIIII
         run: |
           python3 helloworld.py
-
-      - name: Hello World! (test)
-        run: python3 helloworld.py
-        
+      
       - name: Build and Tag image (Docker)
-        run: docker build -f ./Dockerfile -t python_hello_world .
+        run: docker build -f ./Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/python-hello-world:${{ github.run_number }} .
         
       - name: Scan image
         uses: Azure/container-scan@v0
         with:
-          image-name: python_hello_world
+          image-name: ${{ secrets.ACR_LOGIN_SERVER }}/python-hello-world:${{ github.run_number }}
           severity-threshold: CRITICAL
           run-quality-checks: true
           
       - name: Push image
-        run: docker push python_hello_world
+        run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/python-hello-world:${{ github.run_number }}
+        
         
