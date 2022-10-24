@@ -41,7 +41,7 @@ jobs:
           python3 helloworld.py
       
       - name: Build and Tag image (Docker)
-        run: docker build -f ./Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/python-hello-world:${{ github.run_number }} .
+        run: docker build -f ./Docker3 Python File -t ${{ secrets.ACR_LOGIN_SERVER }}/python-hello-world:${{ github.run_number }} .
         
       - name: Scan image
         uses: Azure/container-scan@v0
